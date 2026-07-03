@@ -1,0 +1,25 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv/
+venv/
+
+# Large / regenerable artifacts — do not commit raw datasets or model binaries
+data/
+*.zip
+*.tar.gz
+*.pkl
+*.pt
+*.pth
+*.ckpt
+mlruns/
+mlartifacts/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
