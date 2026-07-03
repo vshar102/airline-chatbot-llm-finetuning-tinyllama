@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nbconvert nbformat jupyter flake8
+      - name: Lint notebooks and scripts
+        run: |
+          flake8 --max-line-length=120 --exclude=.venv,venv . || true
+      - name: Static notebook check (parses without executing; heavy ML/GPU notebooks are not executed in CI)
+        run: |
+          python -c "import nbformat, glob; [nbformat.read(f, as_version=4) for f in glob.glob('*.ipynb')]; print('All notebooks parse successfully')"
